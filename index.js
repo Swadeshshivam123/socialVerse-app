@@ -10,6 +10,17 @@ const port = 80;
 //Calling express and storing it in "app" variable
 const app = express();
 
+//Importing express ejs layouts for 'views'
+const expressLayouts = require('express-ejs-layouts');
+
+//Extract 'stylesheets'(css files) and 'scripts'(js files) from sub pages into layout
+app.set('layout extractStyles', true);
+app.set('layout extractScripts', true);
+
+//Adding middleware to use the express layout('expressLayouts')
+//Must be used before using 'Routes'
+app.use(expressLayouts);
+
 //Adding middleware to use the "express router" for "home"(primary index router("index.js"))
 app.use('/', require('./routes/index'));
 
@@ -18,6 +29,9 @@ app.set('view engine', 'ejs');
 
 //Specifying "views" to the 'view' directory which contains 'home.ejs' file
 app.set('views', './views');
+
+//Accessing static files like images, css and js files kept in their respective sub-folders inside "assets" folder
+app.use(express.static('./assets'));
 
 
 
