@@ -5,18 +5,13 @@ const express = require('express');
 const router = express.Router();
 
 //Checking if "router" is properly loaded or not.
-console.log('Home Router loaded.!');
+console.log('Users Router loaded.!');
 
 //Importing "home_controller.js" file from "controller" directory
-const homeController = require('../controllers/home_controller');
+const usersController = require('../controllers/users_controller');
 
 //Middleware for accessing homeController's action
-router.get('/', homeController.home);
-
-//Adding middleware to use the "express router" for "users"
-router.use('/users', require('./users'));
-
-
+router.get('/profile', usersController.profile);
 
 //Exporting "router" to be available for use for the main "index.js" file
 module.exports = router;
