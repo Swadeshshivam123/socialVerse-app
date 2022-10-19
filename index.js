@@ -5,12 +5,12 @@ const express = require('express');
 const path = require('path');
 
 //Declaring and initializing port no for localhost
-const port = 8080;
+const port = 80;
 
 //Calling express and storing it in "app" variable
 const app = express();
 
-//Adding middleware to use the "express router" for "home"
+//Adding middleware to use the "express router" for "home"(primary index router("index.js"))
 app.use('/', require('./routes/index'));
 
 

@@ -1,3 +1,5 @@
+//Routes for "home"
+
 //Importing expressJS(installed)
 const express = require('express');
 
@@ -15,6 +17,12 @@ router.get('/', homeController.home);
 
 //Adding middleware to use the "express router" for "users"
 router.use('/users', require('./users'));
+
+//Adding middleware to use the "express router" for "posts"
+router.use('/posts', require('./posts'));
+
+//for any further routes, access from here.
+//routes.use('/routerName', require('./routerFile'));
 
 
 
