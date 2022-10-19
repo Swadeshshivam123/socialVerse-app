@@ -13,6 +13,12 @@ const app = express();
 //Adding middleware to use the "express router" for "home"(primary index router("index.js"))
 app.use('/', require('./routes/index'));
 
+//Setting "ejs" as the "view engine"('template engine').
+app.set('view engine', 'ejs');
+
+//Specifying "views" to the 'view' directory which contains 'home.ejs' file
+app.set('views', './views');
+
 
 
 
