@@ -6,8 +6,14 @@ const express = require('express');
 //Importing path(built-in)
 const path = require('path');
 
+//Importing 'cookie-parser'(installed)
+const cookieParser = require('cookie-parser');
+
+//Importing body-parser(installed)
+const bodyParser = require("body-parser");
+
 //Declaring and initializing port no for localhost
-const port = 80;
+const port = 81;
 
 //Calling express and storing it in "app" variable
 const app = express();
@@ -24,6 +30,14 @@ const expressLayouts = require('express-ejs-layouts');
 //Extract 'stylesheets'(css files) and 'scripts'(js files) from sub pages into layout
 app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
+
+//Using bodyParser to encode the data fetched from the form.
+//First middleware
+//It takes the data sent from the form and parses it into keys and values and updates it into req.body
+app.use(bodyParser.urlencoded({ extended: false }));
+
+//For creating and altering cookies and other functionalities 
+app.use(cookieParser());
 
 //Adding middleware to use the express layout('expressLayouts')
 //Must be used before using 'Routes'(because we'll be using these layouts in the routes & controllers, so they must be used first)

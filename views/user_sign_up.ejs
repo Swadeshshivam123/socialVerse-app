@@ -1,1 +1,25 @@
 <h1>Sign up</h1>
+
+<form action="/users/create" method="POST">
+    
+    <label for="name"><p>Name</p></label>
+    <br />
+    <input type = "text" name = "name" id = "name" placeholder="Enter your name" required>
+
+    <label for="email"><p>Email</p></label>
+    <br />
+    <input type = "email" name = "email" id = "email" placeholder="Enter your emailID" required>
+
+    <label for="password"><p>Password</p></label>
+    <br />
+    <input type = "password" name = "password" id = "password" placeholder="Enter your password" required>
+
+    <label for="confirm_password"><p>Confirm password</p></label>
+    <br />
+    <input type = "password" name = "confirm_password" id = "confirm_password" placeholder="Re-enter your password" required>
+    
+    <br>
+
+
+    <button type = "submit" id="submit-btn">Sign Up</button>
+</form>
