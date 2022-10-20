@@ -1,3 +1,5 @@
+///Parent 'index.js' file for socialVerse
+
 //Importing express JS(installed)
 const express = require('express');
 
@@ -10,6 +12,12 @@ const port = 80;
 //Calling express and storing it in "app" variable
 const app = express();
 
+//Importing 'user.js' file from 'models' directory into the collection 'User' to store the user details
+const User = require('./models/user');
+
+//Importing 'mongoose.js' file from 'config' folder to connect it to the database
+const db = require('./config/mongoose');
+
 //Importing express ejs layouts for 'views'
 const expressLayouts = require('express-ejs-layouts');
 
@@ -18,7 +26,7 @@ app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
 
 //Adding middleware to use the express layout('expressLayouts')
-//Must be used before using 'Routes'
+//Must be used before using 'Routes'(because we'll be using these layouts in the routes & controllers, so they must be used first)
 app.use(expressLayouts);
 
 //Adding middleware to use the "express router" for "home"(primary index router("index.js"))
