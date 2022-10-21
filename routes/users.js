@@ -24,5 +24,8 @@ router.get('/sign-in', usersController.signIn);
 //Middleware for accessing 'create' section of userController
 router.post('/create', usersController.create);
 
+//Middleware for accessing 'createSession' section of userController
+router.post('/create-session', usersController.createSession);
+
 //Exporting "router" to be available for use for the main "index.js" file
 module.exports = router;
