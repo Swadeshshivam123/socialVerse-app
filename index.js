@@ -106,7 +106,5 @@ app.listen(port, function (err) {
 
 // github repository for socialVerse
 //   <--- https://github.com/Swadeshshivam123/socialVerse-app.git  --->
- 
-//Pushing changes
-//   <--- git push https://github.com/Swadeshshivam123/socialVerse-app.git master  --->
+
 
