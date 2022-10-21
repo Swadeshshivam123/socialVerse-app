@@ -123,3 +123,11 @@ module.exports.createSession = function (req, res) {
     }
   });
 };
+
+
+module.exports.signOut = function(req, res){
+
+req.clearCookie("user_id");
+return res.redirect('/users/sign-in');
+
+}

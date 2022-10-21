@@ -27,5 +27,8 @@ router.post('/create', usersController.create);
 //Middleware for accessing 'createSession' section of userController
 router.post('/create-session', usersController.createSession);
 
+//Middleware for accessing 'signOut' section of userController
+router.post('/sign-out', usersController.signOut);
+
 //Exporting "router" to be available for use for the main "index.js" file
 module.exports = router;
