@@ -102,16 +102,6 @@ app.listen(port, function (err) {
   console.log(`Yup.! My express server is up and running on port: ${port}`);
 });
 
-app.listen(port, function (err) {
-    if (err) {
-      console.log(`Error in running the server:  ${err}`);
-      console.log(`Error in running the server:  ${err}`);
-      return;
-    }
-  ss
-    console.log(`Yup.! My express server is up and running on port: ${port}`);
-  });
-
 
 
 // github repository for socialVerse
