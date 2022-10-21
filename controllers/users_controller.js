@@ -90,38 +90,50 @@ module.exports.create = function (req, res) {
 };
 
 //Getting the 'sign in' data(Creating session for the registered user)
+
 //Manual Authentication
-module.exports.createSession = function (req, res) {
-  //Steps to authenticate
 
-  //Finding the user
-  User.findOne({ email: req.body.email }, function (err, user) {
-    //Error Handling
-    if (err) {
-      console.lof("Error in finding the user while signing in.!");
-      return;
-    }
 
-    //Handling user found
-    if (user) {
-      //Handle password mismatching condition
-      if (user.password != req.body.password) {
-        return res.redirect("back");
-      }
+// module.exports.createSession = function (req, res) {
+//   //Steps to authenticate
 
-      //Handling session creation(in case of NO password mismatch)
+//   //Finding the user
+//   User.findOne({ email: req.body.email }, function (err, user) {
+//     //Error Handling
+//     if (err) {
+//       console.lof("Error in finding the user while signing in.!");
+//       return;
+//     }
 
-      //Storing the user id in the cookie
-      res.cookie("user_id", user.id);
+//     //Handling user found
+//     if (user) {
+//       //Handle password mismatching condition
+//       if (user.password != req.body.password) {
+//         return res.redirect("back");
+//       }
 
-      //Redirecting to the user's profile page after successful authentication
-      res.redirect("/users/profile");
-    } else {
-      //Handling user NOT found(Authentication failed as the 'emailId' entered doesn't exist in 'User' database model)
-      //redirecting the user back to the 'sign-in' page
-      return res.redirect("back");
-    }
-  });
+//       //Handling session creation(in case of NO password mismatch)
+
+//       //Storing the user id in the cookie
+//       res.cookie("user_id", user.id);
+
+//       //Redirecting to the user's profile page after successful authentication
+//       res.redirect("/users/profile");
+//     } else {
+//       //Handling user NOT found(Authentication failed as the 'emailId' entered doesn't exist in 'User' database model)
+//       //redirecting the user back to the 'sign-in' page
+//       return res.redirect("back");
+//     }
+//   });
+// };
+
+
+//Authentication using 'passport-local'
+
+//Signing in and creating a session for the user
+module.exports.createSession = function(req, res){
+    //Session has been created by Passport JS(from the 'passport_local_strategy' file of the 'config' directory)
+    return res.redirect('/');
 };
 
 

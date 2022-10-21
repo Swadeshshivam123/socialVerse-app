@@ -1,10 +1,14 @@
-//Routes for users.
+ //Routes for users.
 
 //Importing expressJS(installed)
 const express = require('express');
 
 //Importing "Router()" function of express and storing it in "router" variable 
 const router = express.Router();
+
+//Importing 'passport'(installed)
+//(used for authentication using passport)
+const passport = require('passport');
 
 //Checking if "router" is properly loaded or not.
 console.log('Users Router loaded.!');

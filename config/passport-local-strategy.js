@@ -1,3 +1,6 @@
+//Using Passport JS for authentication with NodeJS in 'socialVerse'
+
+
 //Importing 'passport' middleware(installed)
 const passport = require("passport");
 
