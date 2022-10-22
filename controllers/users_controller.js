@@ -50,7 +50,6 @@ module.exports.profile = function (req, res) {
   //Rendering the 'profile' page of the user with the details of the user
   return res.render("user_profile", {
     title: "User profile",
-    user: req.user,
   });
 };
 

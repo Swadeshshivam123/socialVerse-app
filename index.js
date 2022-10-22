@@ -15,7 +15,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 
 //Declaring and initializing port no for localhost
-const port = 89;
+const port = 82;
 
 //Calling express and storing it in "app" variable
 const app = express();
@@ -86,6 +86,11 @@ app.use(passport.initialize());
 //Using 'passport.session()'
 app.use(passport.session());
 
+//Using 'passport.setAuthenticatedUser'
+//This function will automatically get called as a middleware
+//It wil check that whether a 'session-cookie' is present or not(for successfully authenticatd user)
+app.use(passport.setAuthenticatedUser);
+
 //Adding middleware to use the "express router" for "home"(primary index router("index.js"))
 app.use("/", require("./routes/index"));
 
@@ -104,5 +109,5 @@ app.listen(port, function (err) {
 
 
 
-// github repository for socialVerse
+// My github repository for socialVerse
 //   <--- https://github.com/Swadeshshivam123/socialVerse-app.git  --->

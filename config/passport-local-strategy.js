@@ -89,13 +89,15 @@ passport.checkAuthentication = function (req, res, next) {
   }
 };
 
-//Middleware for setting up the successfully authenticated user
+// Middleware for setting up the successfully authenticated user
 passport.setAuthenticatedUser = function (req, res, next) {
   //If the user is authenticated,
   if (req.isAuthenticated()) {
     //'req.user' contains the current signed in user from the 'session-cookie' and we're just sending this to the locals for the views
     res.locals.user = req.user;
+    //Now we can access any 'user' related information in the 'views' directory
   }
+  next();
 };
 
 //Exporting 'passport' to the parent 'index.js' file if needed for further use
