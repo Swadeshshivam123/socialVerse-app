@@ -15,7 +15,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 
 //Declaring and initializing port no for localhost
-const port = 81;
+const port = 89;
 
 //Calling express and storing it in "app" variable
 const app = express();
@@ -57,9 +57,6 @@ app.use(cookieParser());
 //Must be used before using 'Routes'(because we'll be using these layouts in the routes & controllers, so they must be used first)
 app.use(expressLayouts);
 
-//Adding middleware to use the "express router" for "home"(primary index router("index.js"))
-app.use("/", require("./routes/index"));
-
 //Setting "ejs" as the "view engine"('template engine').
 app.set("view engine", "ejs");
 
@@ -89,6 +86,9 @@ app.use(passport.initialize());
 //Using 'passport.session()'
 app.use(passport.session());
 
+//Adding middleware to use the "express router" for "home"(primary index router("index.js"))
+app.use("/", require("./routes/index"));
+
 //Accessing static files like images, css and js files kept in their respective sub-folders inside "assets" folder
 app.use(express.static("./assets"));
 
@@ -106,5 +106,3 @@ app.listen(port, function (err) {
 
 // github repository for socialVerse
 //   <--- https://github.com/Swadeshshivam123/socialVerse-app.git  --->
-
-

@@ -1,6 +1,5 @@
 //Using Passport JS for authentication with NodeJS in 'socialVerse'
 
-
 //Importing 'passport' middleware(installed)
 const passport = require("passport");
 
@@ -19,7 +18,7 @@ const User = require("../models/user");
 //               3. Deserializing the user from the 'key' in the 'cookies'
 
 //1. Find the user by the 'emailID' inserted and signing-in
-passsport.use(
+passport.use(
   new LocalStrategy(
     {
       usernameField: "email",
@@ -76,6 +75,28 @@ passport.deserializeUser(function (id, done) {
   });
 });
 
+//Checking if the user is authenticated successfully
+//We'll be using this function as a 'middleware' to check if the user is signed in or not
+passport.checkAuthentication = function (req, res, next) {
+  //If the user is authenticated successfully, pass on the request to the next function
+  if (req.isAuthenticated()) {
+    return next();
+  }
+
+  //If the user is not signed-in(or authentication failed), then redirect back to the 'sign-in' page
+  else {
+    return res.redirect("/users/sign-in");
+  }
+};
+
+//Middleware for setting up the successfully authenticated user
+passport.setAuthenticatedUser = function (req, res, next) {
+  //If the user is authenticated,
+  if (req.isAuthenticated()) {
+    //'req.user' contains the current signed in user from the 'session-cookie' and we're just sending this to the locals for the views
+    res.locals.user = req.user;
+  }
+};
 
 //Exporting 'passport' to the parent 'index.js' file if needed for further use
 module.exports = passport;

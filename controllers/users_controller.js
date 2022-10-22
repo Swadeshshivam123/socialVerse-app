@@ -1,42 +1,57 @@
 //Importing 'user.js' model(database) from 'models' directory.
 const User = require("../models/user");
 
-//We'll access this function in "routes/users.js"
+//We'll access these functions in "routes/users.js"
+
+//For Manual Authentication strategy
+
+// module.exports.profile = function (req, res) {
+
+//   //Checking if the user is successfully authenticated or not. If yes, pnly then he/she will be able to accss the profile page.
+//   if(req.cookies.user_id){
+
+//     User.findById(req.cookies.user_id, function(err, user){
+
+//       //Error Handling
+//       if(err){
+//         console.log('Error in finding the user for accessing the profile.!');
+//         return;
+//       }
+
+//       //If the user is signed-in(successfully authenticated)
+//       if(user){
+
+//         //Rendering the 'profile' page of the user with the details of the user
+//         res.render("user_profile", {
+//           title: "User profile",
+//           user: user
+//         });
+//       }
+
+//       //If the user is not signed in(failed authentication or someone incorrectly changed the cookies data from the browser), then redirecting back to 'sign-in' page for authenticatig the user
+//       else{
+//         return res.redirect('/users/sign-in');
+//       }
+//     });
+//     }
+
+//   //If the user is not signed in(successfully authenticated), redirecting back to the sign-in page
+//   else{
+//       return res.redirect('/users/sign-in');
+//   }
+
+// };
+
+// For authentication using Passport JS
+
+//As 'passsport.checkAuthentication' is used in the middleware, this 'profile' page of the user will be accessed only when the user is successfully authenticated. In case the user is not signed-in, user will be redirected back to the 'sign-in' page
+//These functionalities are handled in 'passport.checkAuthentication' function in the 'passport-local-strategy.js' file from 'config' directory
 module.exports.profile = function (req, res) {
-  
-  //Checking if the user is successfully authenticated or not. If yes, pnly then he/she will be able to accss the profile page.
-  if(req.cookies.user_id){
-
-    User.findById(req.cookies.user_id, function(err, user){
-      
-      //Error Handling
-      if(err){
-        console.log('Error in finding the user for accessing the profile.!');
-        return;
-      }
-      
-      //If the user is signed-in(successfully authenticated)
-      if(user){
-
-        //Rendering the 'profile' page of the user with the details of the user
-        res.render("user_profile", {
-          title: "User profile",
-          user: user
-        });
-      }
-
-      //If the user is not signed in(failed authentication or someone incorrectly changed the cookies data from the browser), then redirecting back to 'sign-in' page for authenticatig the user
-      else{
-        return res.redirect('/users/sign-in');
-      }
-    });
-    }
-  
-  //If the user is not signed in(successfully authenticated), redirecting back to the sign-in page
-  else{
-      return res.redirect('/users/sign-in');
-  }
-
+  //Rendering the 'profile' page of the user with the details of the user
+  return res.render("user_profile", {
+    title: "User profile",
+    user: req.user,
+  });
 };
 
 //Rendering the 'Sign Up' page for user
@@ -52,8 +67,6 @@ module.exports.signIn = function (req, res) {
     title: "socialVerse | Sign In",
   });
 };
-
-
 
 //Getting the 'sign up' data(Creating the user)
 module.exports.create = function (req, res) {
@@ -93,7 +106,6 @@ module.exports.create = function (req, res) {
 
 //Manual Authentication
 
-
 // module.exports.createSession = function (req, res) {
 //   //Steps to authenticate
 
@@ -127,19 +139,15 @@ module.exports.create = function (req, res) {
 //   });
 // };
 
-
 //Authentication using 'passport-local'
 
 //Signing in and creating a session for the user
-module.exports.createSession = function(req, res){
-    //Session has been created by Passport JS(from the 'passport_local_strategy' file of the 'config' directory)
-    return res.redirect('/');
+module.exports.createSession = function (req, res) {
+  //Session has been created by Passport JS(from the 'passport_local_strategy' file of the 'config' directory)
+  return res.redirect("/users/profile");
 };
 
-
-module.exports.signOut = function(req, res){
-
-req.clearCookie("user_id");
-return res.redirect('/users/sign-in');
-
-}
+module.exports.signOut = function (req, res) {
+  req.clearCookie("user_id");
+  return res.redirect("/users/sign-in");
+};
