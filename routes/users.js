@@ -29,12 +29,10 @@ router.get("/sign-in", usersController.signIn);
 router.post("/create", usersController.create);
 
 //For Manual Authentication
-
 // //Middleware for accessing 'createSession' section of userController
 // router.post('/create-session', usersController.createSession);
 
 //for Authentication using Passport JS
-
 //USing 'passport' as middleware for 'authentication'
 router.post(
   "/create-session",
@@ -43,7 +41,7 @@ router.post(
 );
 
 //Middleware for accessing 'signOut' section of userController
-router.post("/sign-out", usersController.signOut);
+// router.post("/sign-out", usersController.signOut);
 
 //Exporting "router" to be available for use for the main "index.js" file
 module.exports = router;

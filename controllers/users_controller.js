@@ -55,6 +55,12 @@ module.exports.profile = function (req, res) {
 
 //Rendering the 'Sign Up' page for user
 module.exports.signUp = function (req, res) {
+  
+  //Restricting the access to sign-up page if the user is already signed in(successfully authenticated). Redirecting back to user's profile page in this case.
+  if(req.isAuthenticated()){
+    return res.redirect('/users/profile');
+  }
+  
   return res.render("user_sign_up", {
     title: "socialVerse | Sign Up",
   });
@@ -62,6 +68,12 @@ module.exports.signUp = function (req, res) {
 
 //Rendering the 'Sign In' page for user
 module.exports.signIn = function (req, res) {
+  
+  //Restricting the access to sign-in page if the user is already signed in(successfully authenticated). Redirecting back to user's profile page in this case.
+  if(req.isAuthenticated()){
+    return res.redirect('/users/profile');
+  }
+  
   return res.render("user_sign_in", {
     title: "socialVerse | Sign In",
   });
@@ -146,7 +158,9 @@ module.exports.createSession = function (req, res) {
   return res.redirect("/users/profile");
 };
 
-module.exports.signOut = function (req, res) {
-  req.clearCookie("user_id");
-  return res.redirect("/users/sign-in");
-};
+// module.exports.signOut = function (req, res) {
+//   // TODO ---> Clear session-cookie data
+//   res.clearCookie("user");
+//   // res.end();
+//   return res.redirect("/users/sign-in");
+// };
