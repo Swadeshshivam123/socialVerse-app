@@ -3,45 +3,6 @@ const User = require("../models/user");
 
 //We'll access these functions in "routes/users.js"
 
-//For Manual Authentication strategy
-
-// module.exports.profile = function (req, res) {
-
-//   //Checking if the user is successfully authenticated or not. If yes, pnly then he/she will be able to accss the profile page.
-//   if(req.cookies.user_id){
-
-//     User.findById(req.cookies.user_id, function(err, user){
-
-//       //Error Handling
-//       if(err){
-//         console.log('Error in finding the user for accessing the profile.!');
-//         return;
-//       }
-
-//       //If the user is signed-in(successfully authenticated)
-//       if(user){
-
-//         //Rendering the 'profile' page of the user with the details of the user
-//         res.render("user_profile", {
-//           title: "User profile",
-//           user: user
-//         });
-//       }
-
-//       //If the user is not signed in(failed authentication or someone incorrectly changed the cookies data from the browser), then redirecting back to 'sign-in' page for authenticatig the user
-//       else{
-//         return res.redirect('/users/sign-in');
-//       }
-//     });
-//     }
-
-//   //If the user is not signed in(successfully authenticated), redirecting back to the sign-in page
-//   else{
-//       return res.redirect('/users/sign-in');
-//   }
-
-// };
-
 // For authentication using Passport JS
 
 //As 'passsport.checkAuthentication' is used in the middleware, this 'profile' page of the user will be accessed only when the user is successfully authenticated. In case the user is not signed-in, user will be redirected back to the 'sign-in' page
@@ -114,42 +75,6 @@ module.exports.create = function (req, res) {
 };
 
 //Getting the 'sign in' data(Creating session for the registered user)
-
-//Manual Authentication
-
-// module.exports.createSession = function (req, res) {
-//   //Steps to authenticate
-
-//   //Finding the user
-//   User.findOne({ email: req.body.email }, function (err, user) {
-//     //Error Handling
-//     if (err) {
-//       console.lof("Error in finding the user while signing in.!");
-//       return;
-//     }
-
-//     //Handling user found
-//     if (user) {
-//       //Handle password mismatching condition
-//       if (user.password != req.body.password) {
-//         return res.redirect("back");
-//       }
-
-//       //Handling session creation(in case of NO password mismatch)
-
-//       //Storing the user id in the cookie
-//       res.cookie("user_id", user.id);
-
-//       //Redirecting to the user's profile page after successful authentication
-//       res.redirect("/users/profile");
-//     } else {
-//       //Handling user NOT found(Authentication failed as the 'emailId' entered doesn't exist in 'User' database model)
-//       //redirecting the user back to the 'sign-in' page
-//       return res.redirect("back");
-//     }
-//   });
-// };
-
 //Authentication using 'passport-local'
 
 //Signing in and creating a session for the user
@@ -158,9 +83,17 @@ module.exports.createSession = function (req, res) {
   return res.redirect("/users/profile");
 };
 
-// module.exports.signOut = function (req, res) {
-//   // TODO ---> Clear session-cookie data
-//   res.clearCookie("user");
-//   // res.end();
-//   return res.redirect("/users/sign-in");
-// };
+//Signing-out the user from his/her account.
+module.exports.destroySession = function (req, res, next) {
+  // Logging out user's account.
+  //This function is given to 'req' by 'PassportJS'.
+  req.logout(function(err) {
+    //Error Handling   
+    if (err) { 
+      return next(err); 
+    }
+  });
+
+  //Redirecting back to the 'Home' page after logging out.
+  return res.redirect("/");
+};

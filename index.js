@@ -15,7 +15,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 
 //Declaring and initializing port no for localhost
-const port = 82;
+const port = 80;
 
 //Calling express and storing it in "app" variable
 const app = express();
@@ -36,7 +36,12 @@ const passport = require("passport");
 
 //Importing 'passport_local_strategy.js' from 'config' directory and storing it in 'LocalStrategy'
 //(used for authentication using passport-local specifically)
-const LocalStrategy = require("./config/passport-local-strategy");
+const passportLocal = require("./config/passport-local-strategy");
+
+//Importing 'connect-mongo'(installed) and storing it in 'MongoStore'
+//For storing 'session information'(session-cookie) into the database.
+//(so that everytime the page is refreshed or the server is reloaded, the session-cookie data doesn't get erased).
+const MongoStore = require("connect-mongo")(session);
 
 //Importing express ejs layouts for 'views'
 const expressLayouts = require("express-ejs-layouts");
@@ -63,11 +68,13 @@ app.set("view engine", "ejs");
 //Specifying "views" to the 'view' directory which contains 'home.ejs' file
 app.set("views", "./views");
 
+
 //Using the 'session cookie'
+//Using' mongo store' to store the session-cookie in the db
 app.use(
   session({
     name: "sociallVerse",
-    //TODO ---> Change the secret before deployment in the production mode
+    //TODO ---> Change the 'secret' before deployment in the production mode
     secret: "BlahBlahBlah",
     saveUninitialized: false,
     resave: false,
@@ -75,15 +82,27 @@ app.use(
       //Providing the session-time of the cookies.
       //(time after which the cookie expires and the data in the cookie is lost)
       //(generally used when after certain allotted time of inactivity, user gets signed out and needs to sign in again to further access his profile)
-      maxAge: 1000 * 60 * 100,
+      maxAge: 1000 * 60 * 100, //in ms
     },
+    //Creating a new instance for MongoStore and then using the 'mongoose' which is stored in 'db(imported above) to store the session-cookie
+    store: new MongoStore(
+      //Provide mongoose-connection as the database 'db'.
+      { mongooseConnection: db, autoRemove: "disabled" },
+      //Callback function
+      function (err) {
+        console.log(err || "connect-mongodb setup ok");
+      }
+    ),
   })
 );
 
 //Using 'passport.initialize()'
+//It's a middleware that initializes 'Passport'(authentication module)
 app.use(passport.initialize());
 
 //Using 'passport.session()'
+//It is another middleware that alters the request object and change the 'user' value that is currently the session id (from the client cookie) into the true 'deserialized user object'
+//It is equivalent to "app.use(passport.authenticate('session'));" where 'session' refers to the following strategy that is bundled with passportJS.
 app.use(passport.session());
 
 //Using 'passport.setAuthenticatedUser'
@@ -97,6 +116,10 @@ app.use("/", require("./routes/index"));
 //Accessing static files like images, css and js files kept in their respective sub-folders inside "assets" folder
 app.use(express.static("./assets"));
 
+
+
+
+
 //Displaying and error handling if the server is working fine or not.
 app.listen(port, function (err) {
   if (err) {
@@ -106,8 +129,6 @@ app.listen(port, function (err) {
 
   console.log(`Yup.! My express server is up and running on port: ${port}`);
 });
-
-
 
 // My github repository for socialVerse
 //   <--- https://github.com/Swadeshshivam123/socialVerse-app.git  --->

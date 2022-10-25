@@ -23,6 +23,7 @@ passport.use(
     {
       usernameField: "email",
     },
+    //Callback function(middleware)
     function (email, password, done) {
       //'done' here is the callback function for 'passport.use()'
 
@@ -30,7 +31,7 @@ passport.use(
       User.findOne({ email: email }, function (err, user) {
         //Error Handling
         if (err) {
-          console.lof(
+          console.log(
             "Error in finding the user in the database while signing in ---> Passport"
           );
           return done(err);
@@ -42,7 +43,7 @@ passport.use(
           return done(null, false);
         }
 
-        //If the user is found, then we return the user
+        //If the user is found, then we return the 'user'
         return done(null, user);
       });
     }
@@ -76,13 +77,13 @@ passport.deserializeUser(function (id, done) {
 });
 
 //Checking if the user is authenticated successfully
-//We'll be using this function as a 'middleware' to check if the user is signed in or not
+//We'll be using this function as a 'middleware' to check everytime(when neede) if the user is signed in successfully or not
 passport.checkAuthentication = function (req, res, next) {
-  //If the user is authenticated successfully, pass on the request to the next function
+  //If the user is authenticated successfully, pass on the request to the next middleware
   if (req.isAuthenticated()) {
     return next();
   }
-
+  
   //If the user is not signed-in(or authentication failed), then redirect back to the 'sign-in' page
   else {
     return res.redirect("/users/sign-in");
@@ -93,10 +94,11 @@ passport.checkAuthentication = function (req, res, next) {
 passport.setAuthenticatedUser = function (req, res, next) {
   //If the user is authenticated,
   if (req.isAuthenticated()) {
-    //'req.user' contains the current signed in user from the 'session-cookie' and we're just sending this to the locals for the views
+    //'req.user' contains the current signed in user from the 'session-cookie' and we're just sending this to the 'locals' for the 'views'
     res.locals.user = req.user;
     //Now we can access any 'user' related information in the 'views' directory
   }
+  //Passing on the request to the next middleware
   next();
 };
 

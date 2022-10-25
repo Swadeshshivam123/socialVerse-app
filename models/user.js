@@ -1,4 +1,4 @@
-//Importing monggose library
+//Importing mongoose library
 const mongoose = require("mongoose");
 
 //Creating a schema for the user with attributes 'email', 'password' and 'name' having below mentioned properties
