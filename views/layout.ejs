@@ -2,25 +2,35 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %></title>
-    <link rel="stylesheet" href="/css/layout.css">
+    <script
+      src="https://kit.fontawesome.com/0d4ea2bed4.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&family=Trispace:wght@800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/header.css" />
+    <link rel="stylesheet" href="/css/footer.css" />
+    <link rel="shortcut icon" type="image/png" href="/images/logo.jpg" />
     <%- style %>
-</head>
-<body>
-    
-    <%- include('_header'); %>
-
-    <%- body %>
-
+  </head>
+  <body>
+    <%- include('_header'); %> 
+    <main>
+        <%- body %>
+    </main>
 
     <script src="/js/layout.js"></script>
     <%- script %>
-
     <%- include('_footer'); %>
-
-</body>
+  </body>
 </html>

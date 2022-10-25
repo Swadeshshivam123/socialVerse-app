@@ -15,7 +15,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 
 //Declaring and initializing port no for localhost
-const port = 80;
+const port = 28;
 
 //Calling express and storing it in "app" variable
 const app = express();
@@ -43,6 +43,9 @@ const passportLocal = require("./config/passport-local-strategy");
 //(so that everytime the page is refreshed or the server is reloaded, the session-cookie data doesn't get erased).
 const MongoStore = require("connect-mongo")(session);
 
+//Importing 'node-saas-middleware' for SASS.
+const saasMiddleware = require('node-sass-middleware');
+
 //Importing express ejs layouts for 'views'
 const expressLayouts = require("express-ejs-layouts");
 
@@ -50,8 +53,16 @@ const expressLayouts = require("express-ejs-layouts");
 app.set("layout extractStyles", true);
 app.set("layout extractScripts", true);
 
+
+app.use(saasMiddleware({
+  src: './assets/scss',
+  dest: './assets/css',
+  debug: true,
+  outputStyle: 'extended',
+  prefix: '/css'
+}));
+
 //Using bodyParser to encode the data fetched from the form.
-//First middleware
 //It takes the data sent from the form and parses it into keys and values and updates it into req.body
 app.use(bodyParser.urlencoded({ extended: false }));
 

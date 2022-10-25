@@ -51,6 +51,7 @@ passport.use(
 );
 
 //2. Serializing the user to decide which 'key' is to be kept in 'cookies'
+//It picks out the information from the 'user' which needs to be set into the session cookie.
 //(sending 'user_id' from the browser to the server through the 'coookies'('Serialization'))
 passport.serializeUser(function (user, done) {
   //Storing the 'user_id' in encrypted form inside the 'cookies'.
@@ -59,6 +60,7 @@ passport.serializeUser(function (user, done) {
 });
 
 //3. Deserializing the user from the 'key' in the 'cookies'
+//It picks out the user by finding it from the database based on the 'user_is' obtained from the session cookie.
 //(when the browser makes the request, the server sends back the 'user_id'('Deserialization'))
 passport.deserializeUser(function (id, done) {
   //Finding user by 'id' in the database
@@ -90,7 +92,7 @@ passport.checkAuthentication = function (req, res, next) {
   }
 };
 
-// Middleware for setting up the successfully authenticated user
+// Middleware for setting up the successfully authenticated user and accessing it in the 'views'
 passport.setAuthenticatedUser = function (req, res, next) {
   //If the user is authenticated,
   if (req.isAuthenticated()) {

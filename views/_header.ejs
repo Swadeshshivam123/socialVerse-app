@@ -1,20 +1,29 @@
 <!-- Partial for Header -->
+<link rel="stylesheet" href="/css/header.css">
 
 <header>
-    Page header
+    <div class="title-container">
+        <div class="socialVerse-logo">
+            <img src="/images/logo.jpg" id="logo-image">
+        </div>
+        <div class="socialVerse-title">
+            <p id="title-name">socialVerse</p>
+        </div>
+    </div>
 
-    <ul>
-       <% if(locals.user){ %>
-                <li><%= user.name %></li>
-                <li><a href="/users/sign-out">Sign Out</a></li>
+    <div class="user-options">
+        <% if(locals.user){ %>
+            <div id="user-name"><p><%= user.name %></p></div>
+            <div class = "header-link" id="sign-out-div"><a href="/users/sign-out">Sign Out</a></div>
 
 
-        <% }else { %>
-                <li><a href="/users/sign-in">Sign In</a></li>
-                <li><a href="/users/sign-up">Sign Up</a></li>
+    <% }else { %>
+            <div class = "header-link" id="sign-in-div"><a href="/users/sign-in">Sign In</a></div>
+            <div class = "header-link" id="sign-up-div"><a href="/users/sign-up">Sign Up</a></div>
 
-        <% } %>    
-    </ul>
+    <% } %>   
+    <div id="hamburger-icon"><i class="fa-solid fa-bars"></i></div> 
+    </div>
 
 
 </header>
