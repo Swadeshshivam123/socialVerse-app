@@ -19,7 +19,7 @@ router.get('/', homeController.home);
 router.use('/users', require('./users'));
 
 //Adding middleware to use the "express router" for "posts"(posts.js)
-router.use('/posts', require('./posts'));
+router.use('/posts', require('./post'));
 
 //for any further routes, access from here.
 //routes.use('/routerName', require('./routerFile'));

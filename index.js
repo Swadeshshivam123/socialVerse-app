@@ -23,6 +23,9 @@ const app = express();
 //Importing 'user.js' file from 'models' directory into the collection 'User' to store the user details
 const User = require("./models/user");
 
+//Importing 'post.js' file from 'models' directory into the collection 'Post' to store the 'post' details
+const Post = require("./models/post");
+
 //Importing 'mongoose.js' file from 'config' folder to connect it to the database
 const db = require("./config/mongoose");
 
@@ -43,7 +46,7 @@ const passportLocal = require("./config/passport-local-strategy");
 //(so that everytime the page is refreshed or the server is reloaded, the session-cookie data doesn't get erased).
 const MongoStore = require("connect-mongo")(session);
 
-//Importing 'node-saas-middleware' for SASS.
+//Importing 'node-saas-middleware' for SASS(advanced CSS styling).
 const saasMiddleware = require('node-sass-middleware');
 
 //Importing express ejs layouts for 'views'
@@ -53,7 +56,8 @@ const expressLayouts = require("express-ejs-layouts");
 app.set("layout extractStyles", true);
 app.set("layout extractScripts", true);
 
-
+//Using 'saasMiddleware' for all the 'css' files.
+//Should be used firstly because others will use it
 app.use(saasMiddleware({
   src: './assets/scss',
   dest: './assets/css',

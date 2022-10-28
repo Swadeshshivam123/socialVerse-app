@@ -1,1 +1,21 @@
 <h1><%= title %></h1>
+
+<section id="feed-posts">
+  <h4>Posts</h4>
+
+  <form action="/posts/create" id="new-post-form" method="POST">
+    <textarea
+      name="content" cols="30" rows="10" placeholder="Type here..."></textarea>
+    <br />
+    <input type="submit" value="Post">
+  </form>
+
+  <div id="posts-list-container">
+    <ul>
+      <% for(let i of posts) { %>
+      <li><%= i.content %></li>
+
+      <% } %>
+    </ul>
+  </div>
+</section>

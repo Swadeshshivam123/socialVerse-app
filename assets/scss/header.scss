@@ -7,7 +7,7 @@
 
 header{
     height: auto;
-    min-height: 9vh;
+    min-height: 8vh;
     width: 100%;
     background-image: linear-gradient(to right top, #dd0529, #d70041, #cd0055, #bd0067, #a90076, #9e007f, #900088, #7e0191, #75009a, #6900a3, #5a07ad, #4210b7);
     box-sizing: border-box;
@@ -21,7 +21,7 @@ header{
 
     .title-container{
         height: auto;
-        max-height: 75px;
+        max-height: 60px;
         width: auto;
         display: flex;
         justify-content: space-evenly;
@@ -32,8 +32,8 @@ header{
             width: auto;
 
             #logo-image{
-                height: 50px;
-                width: 50px;
+                height: 45px;
+                width: 45px;
                 border: 2px solid white;
                 border-radius: 50%;
                 margin: 5px;
@@ -81,6 +81,7 @@ header{
     
     .user-options{
         height: auto;
+        max-height: 60px;
         width: 23%;
         min-width: 13%;
         display: flex;

@@ -10,10 +10,10 @@ const router = express.Router();
 console.log("Posts router loaded.!");
 
 //Importing "posts_controller.js" file from "controller" directory
-const postsController = require("../controllers/posts_controller");
+const postsController = require('../controllers/posts_controller');
 
-//Middleware for accessing postsController's action
-router.get('/addpost', postsController.addpost);
+//Middleware for accessing 'create' functionality of postsController
+router.post('/create', postsController.create);
 
 //Exporting "router" to be available for use for the main "index.js" file
 module.exports = router;
