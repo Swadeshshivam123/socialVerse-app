@@ -21,6 +21,9 @@ router.use('/users', require('./users'));
 //Adding middleware to use the "express router" for "posts"(posts.js)
 router.use('/posts', require('./post'));
 
+//Adding middleware to use the "express router" for "comments"(comments.js)
+router.use('/comments', require('./comments'));
+
 //for any further routes, access from here.
 //routes.use('/routerName', require('./routerFile'));
 
