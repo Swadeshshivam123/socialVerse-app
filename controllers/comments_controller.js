@@ -15,7 +15,7 @@ module.exports.create = function(req, res){
     }
     //If the 'post' is found in the 'Post' database(valid post), then creating the 'comment' for that post. 
     if(post){
-        //Creating comment for the 'post'      
+        //Creating comment for the 'post'      s
         Comment.create({
             content: req.body.content,
             post: req.body.post,

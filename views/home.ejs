@@ -1,5 +1,8 @@
+
+<!-- Home page title -->
 <h1><%= title %></h1>
 
+<!-- Section for 'post-feeds' on home page -->
 <section id="feed-posts">
   <h4>Posts</h4>
 
@@ -17,37 +20,52 @@
   </form>
   <% } %>
 
-  <!-- //Displaying the user's posts on the 'post-feed' -->
+  <!-- Displaying all the posts with their content and user's name -->
   <div id="posts-list-container">
     <ul>
-      <% for(let post of posts) { %>
-      <li>
-        <p>
-          <%= post.content %>
-          <br />
-          <small><%= post.user.name %></small>
-        </p>
+        <% for(post of posts){ %>
+            
+        <li>
+            <p>
+                <%= post.content %>
+                <br>
+                <small>
+                    <%= post.user.name %>
+                </small>
+            </p>
+            <!-- Form for posting comments on a post -->
+            <div class="post-comments">
+                <% if (locals.user){ %>
+                    <form action="/comments/create" method="POST">
+                        <input type="text" name="content" placeholder="Type Here to add comment..." required>
+                        <input type="hidden" name="post" value="<%= post._id %>" >
+                        <input type="submit" value="Add Comment">
+                    </form>
 
+                <% } %>
 
-
-        <div class="post-comment">
-
-          <% if(locals.user){ %>
-            <form action="/comments/create" method="POST">
-              <input
-                type="text"
-                name="content"
-                placeholder="Write your comment here..."
-              />
-              <input type="hidden" name="post" value="<%= post._id %>" />
-              <input type="submit" value="Add Comment">
-            </form>
-            <% } %>
-        </div>
-
-      </li>
-
-      <% } %>
+                <!-- Displaying all the comments on the post along with ther user's names who posted those comments -->
+                <!-- User need not be logged in to watch the comments -->
+                <div class="post-comments-list">
+                    <ul id="post-comments-<%= post._id %>">
+                        <% for (comment of post.comments){%>
+                            
+                        <p>
+                            <%= comment.content %>
+                            <br>
+                            <small>
+                                <%= comment.user.name %>
+                            </small>
+                        </p>    
+                        <%} %>
+                    </ul>
+                </div>
+            </div>
+            
+        </li>
+            
+        <%} %>
     </ul>
-  </div>
+</div>
+
 </section>

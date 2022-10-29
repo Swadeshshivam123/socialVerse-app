@@ -3,14 +3,10 @@
 //Importing 'Post' collection from 'models' directory
 const Post = require('../models/post');
 
-//We'll access this function in "routes/index.js"
-module.exports.home = function (req, res) {
+// //We'll access this function in "routes/comment.js"
+module.exports.home = function(req, res){
+  //Query to populate 'user' of each 'post' and finding all the posts and then further using nested population, finding details of all the comments of every posts and also the details of the users who posted those comments. Furthermore, rendering them to be further used by 'home.ejs' file and displayng the updated 'home' page.
+  Post.find({}).populate('user').populate({path: 'comments', populate: {path: 'user'}}).exec(function(err, posts){
+      return res.render('home', {title: 'socialVerse | Home', posts:  posts});});
 
-  //Populating 'user' of each 'post' and finding all the posts and rendering them to be further used by 'home.ejs' file and displayng the updated 'home' page.
-  Post.find({}).populate('user').exec(function(err, posts){
-    return res.render('home', {
-      title: 'socialVerse | Home',
-      posts: posts
-    });
-  });
-};
+}
