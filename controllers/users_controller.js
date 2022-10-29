@@ -24,7 +24,7 @@ module.exports.profile = function (req, res) {
   });
 };
 
-//Updating user's details on the basis of data obtained from the 'user-update-form'
+// Updating user's details on the basis of data obtained from the 'user-update-form'
 module.exports.update = function(req, res){
   //Checking if tht user requesting for updation is same as the user signed in
   if(req.user.id==req.params.id){
@@ -43,6 +43,7 @@ module.exports.update = function(req, res){
     return res.status(401).send('Unauthorized');
   }
 };
+
 
 //Rendering the 'Sign Up' page for user
 module.exports.signUp = function (req, res) {
@@ -113,7 +114,7 @@ module.exports.createSession = function (req, res) {
   return res.redirect("/users/profile");
 };
 
-//Signing-out the user from his/her account.
+//<iddleware for signing-out the user from his/her account.
 module.exports.destroySession = function (req, res, next) {
   // Logging out user's account.
   //This function is given to 'req' by 'PassportJS'.

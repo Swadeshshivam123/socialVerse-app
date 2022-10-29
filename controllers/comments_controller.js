@@ -15,7 +15,7 @@ module.exports.create = function(req, res){
     }
     //If the 'post' is found in the 'Post' database(valid post), then creating the 'comment' for that post. 
     if(post){
-        //Creating comment for the 'post'      s
+        //Creating comment for the 'post'
         Comment.create({
             content: req.body.content,
             post: req.body.post,
@@ -31,7 +31,7 @@ module.exports.create = function(req, res){
         //Pushing this 'comment' to 'Post' database t store its 'commentID' in the 'comments' array of 'Post'
         //This is automatically done by mongoDB
         post.comments.push(comment);
-        //SInce, 'Post' database is updated, so we need to save the changes in 'Post'. Hence,
+        //Since, 'Post' database is updated, so we need to save the changes in 'Post'. Hence,
         post.save();
         //Redirecting back to the same page after successfully creating the comment for that post
         res.redirect('/');
