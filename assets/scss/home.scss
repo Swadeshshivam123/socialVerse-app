@@ -1,0 +1,22 @@
+#home-container{
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+
+    #feed-posts{
+      width: 80%;
+      height: auto;
+      max-height: 100%;
+      padding: 10px;
+    }
+
+    #user-friends{
+        width: 20%;
+        height: 100%;
+        padding: 10px;
+        border-left: 1px solid grey;
+    }
+}

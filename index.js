@@ -15,7 +15,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 
 //Declaring and initializing port no for localhost
-const port = 28;
+const port = 497;
 
 //Calling express and storing it in "app" variable
 const app = express();

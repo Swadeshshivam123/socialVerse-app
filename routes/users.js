@@ -17,7 +17,10 @@ console.log("Users Router loaded.!");
 const usersController = require("../controllers/users_controller");
 
 //Middleware for accessing 'profile' section of userController after 'passport.checkAuthentication' is done successfully
-router.get("/profile", passport.checkAuthentication, usersController.profile);
+router.get("/profile/:id", passport.checkAuthentication, usersController.profile);
+
+//Middleware for accessing 'update' section of userController after 'passport.checkAuthentication' is done successfully
+router.post("/update/:id", passport.checkAuthentication, usersController.update);
 
 //Middleware for accessing 'signUp' section of userController
 router.get("/sign-up", usersController.signUp);

@@ -1,4 +1,5 @@
 //Importing 'user.js' model(database) from 'models' directory.
+const { request } = require("express");
 const User = require("../models/user");
 
 //We'll access these functions in "routes/users.js"
@@ -9,9 +10,38 @@ const User = require("../models/user");
 //These functionalities are handled in 'passport.checkAuthentication' function in the 'passport-local-strategy.js' file from 'config' directory
 module.exports.profile = function (req, res) {
   //Rendering the 'profile' page of the user with the details of the user
-  return res.render("user_profile", {
-    title: "User profile",
+
+  User.findById(req.params.id, function(err, user){
+    if(err){
+      console.log('Error in finding the iuser on User database.!');
+      return;
+    }
+
+    return res.render("user_profile", {
+      title: "User profile",
+      profile_user: user
+    });
   });
+};
+
+//Updating user's details on the basis of data obtained from the 'user-update-form'
+module.exports.update = function(req, res){
+  //Checking if tht user requesting for updation is same as the user signed in
+  if(req.user.id==req.params.id){
+    User.findByIdAndUpdate(req.params.id, req.body, function(err, user){
+      //Error Handling
+      if(err){
+        console.log('Error in finding the user in USer database.!');
+        return;
+      }
+      //Updating user's data with new details and redirecting back to the same page.
+      return res.redirect('back');
+    });
+  }
+  //Else, throw an http '401-Unauthorized' error.
+  else{
+    return res.status(401).send('Unauthorized');
+  }
 };
 
 //Rendering the 'Sign Up' page for user
