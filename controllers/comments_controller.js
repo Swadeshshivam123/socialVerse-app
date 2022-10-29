@@ -40,3 +40,35 @@ module.exports.create = function(req, res){
     //If the 'post' is NOT found in the 'Post' database(invalid post), then simply ignore.
    });
 };
+
+//Deleting a 'comment' based on its id
+module.exports.destroy = function(req, res){
+    //Finding the 'comment' by its's id availavle in 'req.params'
+    Comment.findById(req.params.id, function(err, comment){
+        //Error Handling       
+        if(err){
+            console.log("Error in finding the comment in the database.!");
+            return;
+        }
+        // If the user trying to delete the 'comment' is same as the user who created the comment',
+        if(comment.user==req.user.id){
+            
+            //Firstly saving the postId to which this 'comment' belonged to.
+            let postId = comment.post;
+            //Deleting the 'comment' from 'Comment' database.
+            comment.remove();
+            //Now, finding the comment in 'comments' array of post with id (postId) and deleting the comment Id from the 'Post.comments' as well and updating the 'Post' database.
+            Post.findByIdAndUpdate(postId, {$pull: {comments: req.params.id}}, function(err, post){
+                if(err){
+                    console.log('Error in finding the post with id - postId in the Post database.!');
+                    return;
+                }
+                return res.redirect('back');
+            });
+        }
+        //Else, redirecting back to the same page.
+        else{
+            return res.redirect('back');
+        }
+    });
+};

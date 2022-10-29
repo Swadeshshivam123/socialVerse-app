@@ -19,5 +19,8 @@ const postsController = require('../controllers/posts_controller');
 //Middleware for accessing 'create' functionality of postsController after 'passport.checkAuthentication' is done successfully
 router.post('/create', passport.checkAuthentication, postsController.create);
 
+//Middleware for accessing 'destroy' functionality of postsController after 'passport.checkAuthentication' is done successfully
+router.get('/destroy/:id', passport.checkAuthentication, postsController.destroy);
+
 //Exporting "router" to be available for use for the main "index.js" file
 module.exports = router;
