@@ -11,6 +11,9 @@
       src="https://kit.fontawesome.com/0d4ea2bed4.js"
       crossorigin="anonymous"
     ></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -25,12 +28,43 @@
   </head>
   <body>
     <%- include('_header'); %> 
+
+    
+
     <main>
         <%- body %>
     </main>
+    
+    <%- include('_footer'); %>
 
     <script src="/js/layout.js"></script>
     <%- script %>
-    <%- include('_footer'); %>
+
+    <script>
+      // 'Noty' for flashing 'success' notificaions on the page
+      <% if (flash.success && flash.success.length > 0) {%>
+          new Noty({
+              theme: 'relax',
+              text: "<%= flash.success %>",
+              type: 'success',
+              layout: 'topRight',
+              timeout: 1500
+              
+          }).show();    
+      <%} %>
+      
+      // 'Noty' for flashing 'error' notificaions on the page
+      <% if (flash.error && flash.error.length > 0) {%>
+                new Noty({
+                    theme: 'relax',
+                    text: "<%= flash.error %>",
+                    type: 'error',
+                    layout: 'topRight',
+                    timeout: 1500
+                    
+                }).show();    
+            <%} %>
+  </script>
+
   </body>
 </html>

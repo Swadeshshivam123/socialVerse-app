@@ -94,10 +94,3 @@ header {
         font-size: 1.55rem;
         text-decoration: underline;
         cursor: pointer; }
-    header .user-options #hamburger-icon i {
-      height: 10px;
-      width: 10px;
-      color: white; }
-    header .user-options #hamburger-icon i:hover {
-      color: grey;
-      cursor: pointer; }

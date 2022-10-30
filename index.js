@@ -15,7 +15,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 
 //Declaring and initializing port no for localhost
-const port = 467;
+const port = 80;
 
 //Calling express and storing it in "app" variable
 const app = express();
@@ -48,6 +48,12 @@ const MongoStore = require("connect-mongo")(session);
 
 //Importing 'node-saas-middleware' for SASS(advanced CSS styling).
 const saasMiddleware = require('node-sass-middleware');
+
+//Importing 'connect-flash' library(installed) for flashing notifications on certain actions
+const flash = require('connect-flash');
+
+//Importing 'middleware.js' from 'config' directory
+const customMware = require('./config/middleware');
 
 //Importing express ejs layouts for 'views'
 const expressLayouts = require("express-ejs-layouts");
@@ -124,6 +130,14 @@ app.use(passport.session());
 //This function will automatically get called as a middleware
 //It wil check that whether a 'session-cookie' is present or not(for successfully authenticatd user)
 app.use(passport.setAuthenticatedUser);
+
+//Using 'flash'.
+//Must be used after 'app.use(session)'.
+app.use(flash());
+
+//Using 'setFlash' functionality of 'customMware'
+//Must be useed after using 'flash()'
+app.use(customMware.setFlash);
 
 //Adding middleware to use the "express router" for "home"(primary index router("index.js"))
 app.use("/", require("./routes/index"));

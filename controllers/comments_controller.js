@@ -10,7 +10,8 @@ module.exports.create = function(req, res){
     Post.findById(req.body.post, function(err, post){
     //Error Handling
         if(err){
-        console.log('Error in finding the post.!');
+        //Flashing 'error' message notification    
+        req.flash('error', err);
         return;
     }
     //If the 'post' is found in the 'Post' database(valid post), then creating the 'comment' for that post. 
@@ -23,8 +24,8 @@ module.exports.create = function(req, res){
         
        }, function(err, comment){
         if(err){
-            //Error Handling
-            console.log('Error in creating the comment.!');
+            //Flashing 'error' message notification    
+            req.flash('error', err);
             return;
         }
         
@@ -33,6 +34,10 @@ module.exports.create = function(req, res){
         post.comments.push(comment);
         //Since, 'Post' database is updated, so we need to save the changes in 'Post'. Hence,
         post.save();
+
+        //Flashing 'success' message notification    
+        req.flash('success', 'Comment posted successfully.!');
+
         //Redirecting back to the same page after successfully creating the comment for that post
         res.redirect('/');
        });
@@ -47,7 +52,8 @@ module.exports.destroy = function(req, res){
     Comment.findById(req.params.id, function(err, comment){
         //Error Handling       
         if(err){
-            console.log("Error in finding the comment in the database.!");
+            //Flashing 'error' message notification    
+            req.flash('error', err);
             return;
         }
         // If the user trying to delete the 'comment' is same as the user who created the comment',
@@ -60,14 +66,21 @@ module.exports.destroy = function(req, res){
             //Now, finding the comment in 'comments' array of post with id (postId) and deleting the comment Id from the 'Post.comments' as well and updating the 'Post' database.
             Post.findByIdAndUpdate(postId, {$pull: {comments: req.params.id}}, function(err, post){
                 if(err){
-                    console.log('Error in finding the post with id - postId in the Post database.!');
+                    //Flashing 'error' message notification    
+                    req.flash('error', err);
                     return;
                 }
+                //Flashing 'success' message notification    
+                 req.flash('success', 'Comment deleted successfully!');
+
+                 //Redirecting back to the same page.
                 return res.redirect('back');
             });
         }
         //Else, redirecting back to the same page.
         else{
+            //Flashing 'error' message notification    
+            req.flash('error', 'You cannot delete this comment!');
             return res.redirect('back');
         }
     });

@@ -7,22 +7,21 @@ const User = require("../models/user");
 // For authentication using Passport JS
 
 //As 'passsport.checkAuthentication' is used in the middleware, this 'profile' page of the user will be accessed only when the user is successfully authenticated. In case the user is not signed-in, user will be redirected back to the 'sign-in' page
+
 //These functionalities are handled in 'passport.checkAuthentication' function in the 'passport-local-strategy.js' file from 'config' directory
-module.exports.profile = function (req, res) {
-  //Rendering the 'profile' page of the user with the details of the user
 
+
+module.exports.profile = function(req, res){
   User.findById(req.params.id, function(err, user){
-    if(err){
-      console.log('Error in finding the iuser on User database.!');
-      return;
-    }
-
-    return res.render("user_profile", {
-      title: "User profile",
-      profile_user: user
-    });
+      
+    //Rendering the 'profile' page of the user with the details of the user
+    return res.render('user_profile', {
+          title: 'User Profile',
+          profile_user: user
+      });
   });
-};
+
+}
 
 // Updating user's details on the basis of data obtained from the 'user-update-form'
 module.exports.update = function(req, res){
@@ -111,10 +110,13 @@ module.exports.create = function (req, res) {
 //Signing in and creating a session for the user
 module.exports.createSession = function (req, res) {
   //Session has been created by Passport JS(from the 'passport_local_strategy' file of the 'config' directory)
-  return res.redirect("/users/profile");
+  //Flashing notification for logging in successfully.
+  req.flash('success', 'Logged in successfully');
+  //Redirecting back to home page after successfully signing in.
+  return res.redirect("/");
 };
 
-//<iddleware for signing-out the user from his/her account.
+//Middleware for signing-out the user from his/her account.
 module.exports.destroySession = function (req, res, next) {
   // Logging out user's account.
   //This function is given to 'req' by 'PassportJS'.
@@ -124,7 +126,9 @@ module.exports.destroySession = function (req, res, next) {
       return next(err); 
     }
   });
-
+  
+  //Flashing notification for logging out successfully.
+  req.flash('success', 'You have logged out!');
   //Redirecting back to the 'Home' page after logging out.
   return res.redirect("/");
 };

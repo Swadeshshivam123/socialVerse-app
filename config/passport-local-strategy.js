@@ -22,24 +22,25 @@ passport.use(
   new LocalStrategy(
     {
       usernameField: "email",
+      passReqToCallback: true
     },
     //Callback function(middleware)
-    function (email, password, done) {
+    function (req, email, password, done) {
       //'done' here is the callback function for 'passport.use()'
 
       //Find a user and establish the identity
       User.findOne({ email: email }, function (err, user) {
         //Error Handling
         if (err) {
-          console.log(
-            "Error in finding the user in the database while signing in ---> Passport"
-          );
+          //Flashing error message notification.
+          req.flash('error', err);
           return done(err);
         }
 
         //Checking if user is not present in the database or if the 'email' of the user matches but the password entered is incorrect
         if (!user || user.password != password) {
-          console.log("Invalid Username/Password");
+          //Flashing error message notification.
+          req.flash('error', 'Invalid Username or Password')
           return done(null, false);
         }
 
