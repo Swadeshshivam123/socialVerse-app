@@ -1,9 +1,9 @@
-//Using MongoDB, Mongoose and Robo3T(Studio3T)(GUI for visualizing database) for the database creation
+//Using MongoDB, Mongoose and Robo3T(Studio3T)(GUI for visualizing mongoDB database) for the 'database-creation'
 
 //Acquire the mongoose library
 const mongoose = require('mongoose');
 
-//Connect mongoose to the database that we want to create(socialverse_development)
+//Connect mongoose to the database that we want to create('socialverse_development')
 mongoose.connect("mongodb://localhost/socialverse_development");
 
 //Acquire the connection in 'db' variable to check if it is successfully connected or not

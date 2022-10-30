@@ -1,5 +1,5 @@
 //Importing 'user.js' model(database) from 'models' directory.
-const { request } = require("express");
+const express = require("express");
 const User = require("../models/user");
 
 //We'll access these functions in "routes/users.js"
@@ -30,7 +30,7 @@ module.exports.update = function(req, res){
     User.findByIdAndUpdate(req.params.id, req.body, function(err, user){
       //Error Handling
       if(err){
-        console.log('Error in finding the user in USer database.!');
+        console.log('Error in finding the user in User database.!');
         return;
       }
       //Updating user's data with new details and redirecting back to the same page.
@@ -98,8 +98,10 @@ module.exports.create = function (req, res) {
         return res.redirect("/users/sign-in");
       });
     } else {
+      //Flashing 'error' message notification
+      req.flash('error', 'EmailID already exists. Sign in to continue!');
       //Redirecting back to the 'sign-up' page if the 'emailID' already exists in the 'User' database model
-      return res.redirect("back");
+      return res.redirect("/users/sign-in");
     }
   });
 };
@@ -109,7 +111,7 @@ module.exports.create = function (req, res) {
 
 //Signing in and creating a session for the user
 module.exports.createSession = function (req, res) {
-  //Session has been created by Passport JS(from the 'passport_local_strategy' file of the 'config' directory)
+  //Session has been created by Passport JS(from the 'passport-local-strategy' file of the 'config' directory)
   //Flashing notification for logging in successfully.
   req.flash('success', 'Logged in successfully');
   //Redirecting back to home page after successfully signing in.

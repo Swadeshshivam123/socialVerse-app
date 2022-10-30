@@ -29,7 +29,7 @@ module.exports.create = function(req, res){
             return;
         }
         
-        //Pushing this 'comment' to 'Post' database t store its 'commentID' in the 'comments' array of 'Post'
+        //Pushing this 'comment' to 'Post' database to store its 'commentID' in the 'comments' array of 'Post'
         //This is automatically done by mongoDB
         post.comments.push(comment);
         //Since, 'Post' database is updated, so we need to save the changes in 'Post'. Hence,

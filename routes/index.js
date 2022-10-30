@@ -1,9 +1,9 @@
-//Routes for "home"
+//Routes for "home"(primary router)
 
 //Importing expressJS(installed)
 const express = require('express');
 
-//Importing "Router()" function of express and storing it in "router" variable 
+//Importing "Router()" functionality of express and storing it in "router" variable 
 const router = express.Router();
 
 //Checking if "router" is properly loaded or not.
@@ -12,7 +12,7 @@ console.log('Home Router loaded.!');
 //Importing "home_controller.js" file from "controller" directory
 const homeController = require('../controllers/home_controller');
 
-//Middleware for accessing homeController's 'home' functionality
+//Middleware for getting access to homeController's 'home' functionality
 router.get('/', homeController.home);
 
 //Adding middleware to use the "express router" for "users"(users.js)

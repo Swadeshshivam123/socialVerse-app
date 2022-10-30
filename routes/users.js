@@ -28,6 +28,9 @@ router.get("/sign-up", usersController.signUp);
 //Middleware for accessing 'signIn' section of userController
 router.get("/sign-in", usersController.signIn);
 
+//Middleware for accessing 'destroySession' section of userController
+router.get("/sign-out", usersController.destroySession);
+
 //Middleware for accessing 'create' section of userController
 router.post("/create", usersController.create);
 
@@ -38,9 +41,6 @@ router.post(
   passport.authenticate("local", { failureRedirect: "/users/sign-in" }),
   usersController.createSession
 );
-
-//Middleware for accessing 'destroySession' section of userController
-router.get("/sign-out", usersController.destroySession);
 
 //Exporting "router" to be available for use for the main "index.js" file
 module.exports = router;

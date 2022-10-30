@@ -44,18 +44,20 @@ const passportLocal = require("./config/passport-local-strategy");
 //Importing 'connect-mongo'(installed) and storing it in 'MongoStore'
 //For storing 'session information'(session-cookie) into the database.
 //(so that everytime the page is refreshed or the server is reloaded, the session-cookie data doesn't get erased).
+//Veersion 3.0.0 installed. Syntax for current version 4.0.0 is different.
+//'session' here is taken from the above 'session' acquired from 'express-session'.
 const MongoStore = require("connect-mongo")(session);
 
-//Importing 'node-saas-middleware' for SASS(advanced CSS styling).
+//Importing 'node-saas-middleware' for SASS(advanced CSS styling)(SCSS).
 const saasMiddleware = require('node-sass-middleware');
 
-//Importing 'connect-flash' library(installed) for flashing notifications on certain actions
+//Importing 'connect-flash' library(installed) for flashing notifications on certain choosen actions
 const flash = require('connect-flash');
 
-//Importing 'middleware.js' from 'config' directory
+//Importing 'middleware.js' from 'config' directory(to send 'flash' 'req' to 'res.locals' to be used in 'views')
 const customMware = require('./config/middleware');
 
-//Importing express ejs layouts for 'views'
+//Importing express ejs layouts for 'views'(layout of the pages of socialVerse)
 const expressLayouts = require("express-ejs-layouts");
 
 //Extract 'stylesheets'(css files) and 'scripts'(js files) from sub pages into layout
@@ -73,20 +75,20 @@ app.use(saasMiddleware({
 }));
 
 //Using bodyParser to encode the data fetched from the form.
-//It takes the data sent from the form and parses it into keys and values and updates it into req.body
+//It takes the data sent from the form and parses it into keys and values and updates it into 'req.body'
 app.use(bodyParser.urlencoded({ extended: false }));
 
 //For creating and altering cookies and other functionalities
 app.use(cookieParser());
 
 //Adding middleware to use the express layout('expressLayouts')
-//Must be used before using 'Routes'(because we'll be using these layouts in the routes & controllers, so they must be used first)
+//Must be used before using 'Routes'(because we'll be using these layouts in the 'routes' & 'controllers', so they must be used first)
 app.use(expressLayouts);
 
 //Setting "ejs" as the "view engine"('template engine').
 app.set("view engine", "ejs");
 
-//Specifying "views" to the 'view' directory which contains 'home.ejs' file
+//Specifying "views" to the 'view' directory which contains all the '.ejs' files
 app.set("views", "./views");
 
 
@@ -105,7 +107,7 @@ app.use(
       //(generally used when after certain allotted time of inactivity, user gets signed out and needs to sign in again to further access his profile)
       maxAge: 1000 * 60 * 100, //in ms
     },
-    //Creating a new instance for MongoStore and then using the 'mongoose' which is stored in 'db(imported above) to store the session-cookie
+    //Creating a new instance for MongoStore and then using 'mongoose' which is stored in 'db(imported above) to store the 'session-cookie'
     store: new MongoStore(
       //Provide mongoose-connection as the database 'db'.
       { mongooseConnection: db, autoRemove: "disabled" },
@@ -123,7 +125,7 @@ app.use(passport.initialize());
 
 //Using 'passport.session()'
 //It is another middleware that alters the request object and change the 'user' value that is currently the session id (from the client cookie) into the true 'deserialized user object'
-//It is equivalent to "app.use(passport.authenticate('session'));" where 'session' refers to the following strategy that is bundled with passportJS.
+//It is equivalent to "app.use(passport.authenticate('session'));" where 'session' refers to the following strategy that is bundled with 'passportJS'.
 app.use(passport.session());
 
 //Using 'passport.setAuthenticatedUser'
@@ -142,7 +144,7 @@ app.use(customMware.setFlash);
 //Adding middleware to use the "express router" for "home"(primary index router("index.js"))
 app.use("/", require("./routes/index"));
 
-//Accessing static files like images, css and js files kept in their respective sub-folders inside "assets" folder
+//Accessing static files like images, css, scss and js files kept in their respective sub-directories inside "assets" directory.
 app.use(express.static("./assets"));
 
 

@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema(
     },
   },
   {
+    //To show timestamp of 'createdAt' an 'updatedAt'
     timestamps: true,
   }
 );
@@ -26,5 +27,5 @@ const userSchema = new mongoose.Schema(
 //Creating Model with name 'User' for the schema(userSchema)
 const User = mongoose.model("User", userSchema);
 
-//Exporting the model to be further used by the parent 'contact.js' file.
+//Exporting the model to be further used by the parent 'contact.js' file(if needed).
 module.exports = User;
