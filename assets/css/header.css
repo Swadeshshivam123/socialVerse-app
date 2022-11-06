@@ -58,27 +58,55 @@ header {
   header .user-options {
     height: auto;
     max-height: 60px;
-    width: 23%;
-    min-width: 13%;
+    width: auto;
+    min-width: 25%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     padding-left: 1%;
     padding-right: 1%; }
-    header .user-options #user-name {
+    header .user-options #user-details {
       height: auto;
       width: auto;
-      color: white;
-      text-decoration: none;
-      font-weight: 1500;
-      font-size: 1.7rem;
-      font-family: 'Lobster', cursive;
-      padding: auto; }
-      header .user-options #user-name p:hover {
-        font-size: 1.75rem;
-        color: lightgrey;
-        cursor: pointer; }
+      min-width: 250px;
+      display: flex;
+      justify-content: center;
+      align-items: center; }
+      header .user-options #user-details #user-image {
+        height: auto;
+        width: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center; }
+        header .user-options #user-details #user-image img {
+          height: 40px;
+          width: 40px;
+          border: 3px solid white;
+          border-radius: 50%;
+          transition: transform;
+          transition-duration: 0.2s; }
+        header .user-options #user-details #user-image img:hover {
+          box-shadow: 8px grey;
+          transform: scale(1.1); }
+      header .user-options #user-details #space-div {
+        width: 5%;
+        height: 100%; }
+      header .user-options #user-details #user-name {
+        height: auto;
+        width: auto;
+        color: white;
+        text-decoration: none;
+        font-weight: 1500;
+        font-size: 1.7rem;
+        font-family: 'Lobster', cursive;
+        padding: auto; }
+        header .user-options #user-details #user-name p a {
+          color: lightgrey;
+          text-decoration: none; }
+        header .user-options #user-details #user-name p a:hover {
+          font-size: 1.8rem;
+          cursor: pointer; }
     header .user-options .header-link {
       height: auto;
       width: auto;

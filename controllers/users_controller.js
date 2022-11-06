@@ -1,8 +1,9 @@
+//User Controller
+
 //Importing 'user.js' model(database) from 'models' directory.
-const express = require("express");
 const User = require("../models/user");
 
-//We'll access these functions in "routes/users.js"
+//We'll access these functionalities in "routes/users.js"
 
 // For authentication using Passport JS
 
@@ -24,24 +25,53 @@ module.exports.profile = function(req, res){
 }
 
 // Updating user's details on the basis of data obtained from the 'user-update-form'
-module.exports.update = function(req, res){
-  //Checking if tht user requesting for updation is same as the user signed in
-  if(req.user.id==req.params.id){
-    User.findByIdAndUpdate(req.params.id, req.body, function(err, user){
-      //Error Handling
-      if(err){
-        console.log('Error in finding the user in User database.!');
-        return;
+//Using 'async-await'
+module.exports.update = async function(req, res){
+   
+  //Checking if the user requesting for updation is same as the user signed in
+  //(Multiple level authentication)
+  if(req.user.id == req.params.id){
+
+      try{
+
+          let user = await User.findById(req.params.id);
+          //Calling the static method 'uploadedAvatar' of 'User' model for reading the request/data of the multipart form
+          User.uploadedAvatar(req, res, function(err){
+              if (err) {
+                //Error Handling
+                console.log('*****Multer Error: ', err);
+                return;
+              }
+              
+              //Updating user's name and emailID
+              user.name = req.body.name;
+              user.email = req.body.email;
+
+              //Checking if the request 'req' has a file or not
+              if (req.file){
+                  //This is saving the path of uploaded file into the avatar field of the user
+                  user.avatar = User.avatarPath + '/' + req.file.filename;
+              }
+              //Now, since 'user' is updated, we'll save it.
+              user.save();
+              //Redirecting back to th same page after successfully updating 'user-details'.
+              return res.redirect('back');
+          });
+
+      }catch(err){
+        //Flashing 'error' message notification. 
+          req.flash('error', err);
+          return res.redirect('back');
       }
-      //Updating user's data with new details and redirecting back to the same page.
-      return res.redirect('back');
-    });
+
+
+  }else{
+      //Flashing 'error' message notification. 
+      req.flash('error', 'Unauthorized!');
+      //Rendering 'HTTP 401 request - Unauthorized' page
+      return res.status(401).send('Unauthorized');
   }
-  //Else, throw an http '401-Unauthorized' error.
-  else{
-    return res.status(401).send('Unauthorized');
-  }
-};
+}
 
 
 //Rendering the 'Sign Up' page for user
@@ -70,27 +100,30 @@ module.exports.signIn = function (req, res) {
   });
 };
 
-//Getting the 'sign up' data(Creating the user)
+//Getting the 'sign up' data and creating a new user for 'socialVerse'.
 module.exports.create = function (req, res) {
   //Checking if the 'password' and 'confirm-password' entered don't exactly match, redirecting back to the sign-up page.
   if (req.body.password != req.body.confirm_password) {
-    return res.redirect("back");
+    req.flash('error', 'Entered Password and Confirm password do not match!');
+    return res.redirect('back');
   }
 
   //Checking the uniqueness of the emailID.
   User.findOne({ email: req.body.email }, function (err, user) {
     //Error handling.
     if (err) {
-      console.log("Error in finding user in signing up.!");
+      //Flashing 'error' notification
+      req.flash('error', err); 
       return;
     }
 
-    //If the emailID entered for sign-up already exists in the 'User' database, then redirect back to the same page, else, create a user with details available in 'req.body'(obtained from the body-parser) and push the user-data in the database model 'User'.
+    //If the emailID entered for sign-up already exists in the 'User' database, then redirect back to the sign-in page, else, create a user with details available in 'req.body'(obtained from the body-parser) and push the user-data in the database model 'User'.
     if (!user) {
       User.create(req.body, function (err, user) {
         //Error handling.
         if (err) {
-          console.log("Error in creating a user while signing up.!");
+          //Flashing 'error' notification
+          req.flash('error', err);
           return;
         }
 
@@ -120,7 +153,7 @@ module.exports.createSession = function (req, res) {
 
 //Middleware for signing-out the user from his/her account.
 module.exports.destroySession = function (req, res, next) {
-  // Logging out user's account.
+  // Logging out of user's account.
   //This function is given to 'req' by 'PassportJS'.
   req.logout(function(err) {
     //Error Handling   
@@ -130,7 +163,7 @@ module.exports.destroySession = function (req, res, next) {
   });
   
   //Flashing notification for logging out successfully.
-  req.flash('success', 'You have logged out!');
+  req.flash('success', 'You have logged out successfully!');
   //Redirecting back to the 'Home' page after logging out.
   return res.redirect("/");
 };

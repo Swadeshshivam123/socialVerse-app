@@ -14,33 +14,32 @@ const passport = require("passport");
 console.log("Users Router loaded.!");
 
 //Importing "home_controller.js" file from "controller" directory
-const usersController = require("../controllers/users_controller");
+const usersController = require('../controllers/users_controller');
 
 //Middleware for accessing 'profile' section of userController after 'passport.checkAuthentication' is done successfully
-router.get("/profile/:id", passport.checkAuthentication, usersController.profile);
+router.get('/profile/:id', passport.checkAuthentication, usersController.profile);
 
 //Middleware for accessing 'update' section of userController after 'passport.checkAuthentication' is done successfully
-router.post("/update/:id", passport.checkAuthentication, usersController.update);
+router.post('/update/:id', passport.checkAuthentication, usersController.update);
 
 //Middleware for accessing 'signUp' section of userController
-router.get("/sign-up", usersController.signUp);
+router.get('/sign-up', usersController.signUp);
 
 //Middleware for accessing 'signIn' section of userController
-router.get("/sign-in", usersController.signIn);
+router.get('/sign-in', usersController.signIn);
+
+//Middleware for accessing 'create' section of userController
+router.post('/create', usersController.create);
+
+//for Authentication using Passport JS('passport-local-strategy' in config directory)
+//Using 'passport' as middleware for 'authentication'
+router.post('/create-session', passport.authenticate(
+  'local',
+  {failureRedirect: '/users/sign-in'},
+), usersController.createSession);
 
 //Middleware for accessing 'destroySession' section of userController
 router.get("/sign-out", usersController.destroySession);
-
-//Middleware for accessing 'create' section of userController
-router.post("/create", usersController.create);
-
-//for Authentication using Passport JS
-//Using 'passport' as middleware for 'authentication'
-router.post(
-  "/create-session",
-  passport.authenticate("local", { failureRedirect: "/users/sign-in" }),
-  usersController.createSession
-);
 
 //Exporting "router" to be available for use for the main "index.js" file
 module.exports = router;

@@ -6,40 +6,56 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Page title -->
     <title><%= title %></title>
+    <!-- Scrit for using 'font-awesome' for icons -->
     <script
       src="https://kit.fontawesome.com/0d4ea2bed4.js"
       crossorigin="anonymous"
     ></script>
+    <!-- Styleshet for using 'Noty' -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
+    <!-- Javascript for using 'Noty' -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+    
+    <!-- Script for using 'JQUERY'  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
+    <!-- Importing some google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Pacifico&family=Trispace:wght@800&display=swap"
       rel="stylesheet"
     />
+    <!-- CSS file for layout -->
     <link rel="stylesheet" href="/css/layout.css" />
+    <!-- CSS file for header -->
     <link rel="stylesheet" href="/css/header.css" />
+    <!-- CSS file for footer -->
     <link rel="stylesheet" href="/css/footer.css" />
+    <!-- For using favicon con for 'socialVere' -->
     <link rel="shortcut icon" type="image/png" href="/images/logo.jpg" />
+    <!-- Appending all the other stylesheets from other '.ejs' files here -->
     <%- style %>
+
   </head>
   <body>
+
+    <!-- Including header partial ejs file ('_header.ejs')  -->
     <%- include('_header'); %> 
 
     
-
-    <main>
+    <!-- Main section -->
+    <main id="layout-main">
+        <!-- Body of the other '.ejs' file in dsplay -->
         <%- body %>
     </main>
     
+    <!-- Including footer partial ejs file ('_footer.ejs')  -->
     <%- include('_footer'); %>
 
-    <script src="/js/layout.js"></script>
-
-    
+    <!-- Appending all the other javascript files from other '.ejs' files here -->
     <%- script %>
 
     <script>

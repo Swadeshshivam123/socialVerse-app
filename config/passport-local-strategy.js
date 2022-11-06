@@ -9,7 +9,7 @@ const LocalStrategy = require("passport-local").Strategy;
 //Importing 'User' database
 const User = require("../models/user");
 
-//Authentication(sign-in) of 'user; using 'passport'(local-strategy)
+//Authentication(sign-in) of 'user' using 'passport'(local-strategy)
 
 //Process of Authentication using 'passport-local-strategy'
 
@@ -53,7 +53,7 @@ passport.use(
 );
 
 //2. Serializing the user to decide which 'key' is to be kept in 'cookies'
-//It picks out the information from the 'user' which needs to be set into the session cookie.
+//It picks out the information from the 'user' which needs to be set into the 'session-cookie'.
 //(sending 'user_id' from the browser to the server through the 'coookies'('Serialization'))
 //Next middleware
 passport.serializeUser(function (user, done) {
@@ -92,9 +92,7 @@ passport.checkAuthentication = function (req, res, next) {
   }
   
   //If the user is not signed-in(or authentication failed), then redirect back to the 'sign-in' page
-  else {
-    return res.redirect("/users/sign-in");
-  }
+  return res.redirect('/users/sign-in');
 };
 
 // Middleware for setting up the successfully authenticated user and accessing it in the 'views'

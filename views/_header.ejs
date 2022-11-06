@@ -1,29 +1,42 @@
 <!-- Partial for Header -->
-<link rel="stylesheet" href="/css/header.css">
+<link rel="stylesheet" href="/css/header.css" />
 
 <header>
-    <div class="title-container">
-        <div class="socialVerse-logo">
-            <img src="/images/logo.jpg" id="logo-image">
-        </div>
-        <div class="socialVerse-title">
-            <p id="title-name">socialVerse</p>
-        </div>
+  <div class="title-container">
+    <div class="socialVerse-logo">
+      <img src="/images/logo.jpg" id="logo-image" />
+    </div>
+    <div class="socialVerse-title">
+      <p id="title-name">socialVerse</p>
+    </div>
+  </div>
+
+  <div class="user-options">
+    <% if(locals.user){ %>
+    <div id="user-details">
+      <div id="user-image">
+        <img src="<%= user.avatar %>"/>
+      </div>
+      <div id="space-div"></div>
+      <div id="user-name">
+        <p>
+            <a href="/users/profile/<%= user._id %>"><%= user.name %></a>
+        </p>
+    </div>
     </div>
 
-    <div class="user-options">
-        <% if(locals.user){ %>
-            <div id="user-name"><p><%= user.name %></p></div>
-            <div class = "header-link" id="sign-out-div"><a href="/users/sign-out">Sign Out</a></div>
-
+    <div class="header-link" id="sign-out-div">
+      <a href="/users/sign-out">Sign Out</a>
+    </div>
 
     <% }else { %>
-            <div class = "header-link" id="sign-in-div"><a href="/users/sign-in">Sign In</a></div>
-            <div class = "header-link" id="sign-up-div"><a href="/users/sign-up">Sign Up</a></div>
-
-    <% } %>   
-    <!-- <div id="hamburger-icon"><i class="fa-solid fa-bars"></i></div>  -->
+    <div class="header-link" id="sign-in-div">
+      <a href="/users/sign-in">Sign In</a>
+    </div>
+    <div class="header-link" id="sign-up-div">
+      <a href="/users/sign-up">Sign Up</a>
     </div>
 
-
+    <% } %>
+  </div>
 </header>
